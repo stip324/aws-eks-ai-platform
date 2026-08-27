@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
 
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -17,6 +17,9 @@ spec:
         app: {{ .Release.Name }}
 
     spec:
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -30,8 +33,12 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+
           ports:
             - containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -42,6 +49,8 @@ spec:
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 5
             periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
 
           livenessProbe:
             httpGet:
@@ -49,3 +58,13 @@ spec:
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 15
             periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: tmp
+          emptyDir: {}
