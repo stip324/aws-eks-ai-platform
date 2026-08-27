@@ -13,6 +13,7 @@ module "eks" {
 
   endpoint_public_access  = true
   endpoint_private_access = true
+  endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
