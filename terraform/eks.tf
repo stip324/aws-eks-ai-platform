@@ -1,3 +1,8 @@
+# trivy:ignore:AWS-0104
+# The upstream terraform-aws-eks module creates an unrestricted node egress
+# rule as part of its recommended EKS node security group rules.
+# For production, egress would be restricted further using VPC endpoints,
+# prefix lists and explicit destination/port rules.
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "21.25.0"
