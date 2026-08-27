@@ -3,6 +3,9 @@ kind: Service
 
 metadata:
   name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Release.Name }}
 
 spec:
   type: {{ .Values.service.type }}

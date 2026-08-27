@@ -42,3 +42,8 @@ autoscaling:
 podDisruptionBudget:
   enabled: true
   minAvailable: 2
+
+monitoring:
+  enabled: true
+  path: /metrics
+  interval: 30s

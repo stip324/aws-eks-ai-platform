@@ -3,12 +3,16 @@ kind: Service
 metadata:
   name: vehicle-api
   namespace: vehicle-platform
+  labels:
+    app: vehicle-api
 spec:
   selector:
     app: vehicle-api
+
   ports:
     - name: http
       protocol: TCP
       port: 80
       targetPort: 8000
+
   type: ClusterIP

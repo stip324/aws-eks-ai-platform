@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: vehicle-api
+  namespace: vehicle-platform
+spec:
+  selector:
+    matchLabels:
+      app: vehicle-api
+
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s

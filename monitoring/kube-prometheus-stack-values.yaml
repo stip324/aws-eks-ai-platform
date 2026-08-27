@@ -1,0 +1,19 @@
+prometheus:
+  prometheusSpec:
+    # Discover ServiceMonitors beyond only those created by this Helm release.
+    serviceMonitorSelectorNilUsesHelmValues: false
+
+    # Allow ServiceMonitor discovery across namespaces.
+    serviceMonitorNamespaceSelector: {}
+
+grafana:
+  enabled: true
+
+alertmanager:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
