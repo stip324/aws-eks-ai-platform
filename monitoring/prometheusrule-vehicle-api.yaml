@@ -1,0 +1,68 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: vehicle-api-alerts
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: vehicle-api.rules
+      rules:
+        - alert: VehicleApiHigh5xxRate
+          expr: |
+            (
+              sum(rate(http_requests_total{status_code=~"5.."}[5m]))
+              /
+              clamp_min(sum(rate(http_requests_total[5m])), 0.001)
+            ) > 0.05
+          for: 5m
+          labels:
+            severity: warning
+            service: vehicle-api
+          annotations:
+            summary: "Vehicle API 5xx rate is above 5%"
+            description: "More than 5% of Vehicle API requests have returned 5xx responses for 5 minutes."
+
+        - alert: VehicleApiHighLatency
+          expr: |
+            histogram_quantile(
+              0.95,
+              sum(rate(http_request_duration_seconds_bucket[5m])) by (le)
+            ) > 1
+          for: 5m
+          labels:
+            severity: warning
+            service: vehicle-api
+          annotations:
+            summary: "Vehicle API p95 latency is above 1 second"
+            description: "The p95 request latency has remained above 1 second for 5 minutes."
+
+        - alert: VehicleApiPodRestarting
+          expr: |
+            sum(
+              increase(
+                kube_pod_container_status_restarts_total{
+                  namespace="vehicle-platform",
+                  container="vehicle-api"
+                }[10m]
+              )
+            ) > 3
+          for: 5m
+          labels:
+            severity: warning
+            service: vehicle-api
+          annotations:
+            summary: "Vehicle API pods are restarting frequently"
+            description: "Vehicle API containers restarted more than 3 times within 10 minutes."
+
+        - alert: VehicleApiNoTraffic
+          expr: |
+            sum(rate(http_requests_total[10m])) == 0
+          for: 15m
+          labels:
+            severity: info
+            service: vehicle-api
+          annotations:
+            summary: "Vehicle API has no observed traffic"
+            description: "Prometheus has observed no Vehicle API requests for 15 minutes."
