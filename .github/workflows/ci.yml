@@ -92,6 +92,7 @@ jobs:
           scan-ref: .
           severity: HIGH,CRITICAL
           exit-code: 1
+          version: v0.74.0
 
   container-build:
     name: Container Build
@@ -116,3 +117,4 @@ jobs:
           ignore-unfixed: true
           scanners: vuln
           exit-code: 1
+          version: v0.74.0
