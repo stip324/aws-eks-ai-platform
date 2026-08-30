@@ -108,6 +108,19 @@ jobs:
             -t vehicle-api:${{ github.sha }} \
             ./application
 
+      - name: Test container
+        run: |
+          docker run -d \
+            --name vehicle-api-test \
+            -p 8000:8000 \
+            vehicle-api:${{ github.sha }}
+
+          sleep 5
+
+          curl --fail http://localhost:8000/health
+
+          docker rm -f vehicle-api-test
+
       - name: Scan container image
         uses: aquasecurity/trivy-action@v0.36.0
         with:

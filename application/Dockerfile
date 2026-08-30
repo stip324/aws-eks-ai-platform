@@ -9,13 +9,11 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+COPY requirements-dev.txt .
 
-RUN python -m pip install --no-cache-dir --upgrade \
-      pip \
-      "setuptools>=78.1.1" \
-      wheel \
-    && python -m pip install --no-cache-dir -r requirements.txt \
+RUN python -m pip install --no-cache-dir --upgrade pip \
+    && python -m pip install --no-cache-dir -r requirements-dev.txt \
+    && python -m pip uninstall -y pip setuptools wheel \
     && useradd --create-home --uid 10001 appuser
 
 COPY app ./app
