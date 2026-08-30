@@ -27,3 +27,8 @@ output "node_security_group_id" {
   description = "Security group ID used by EKS worker nodes"
   value       = module.eks.node_security_group_id
 }
+
+output "ecr_repository_url" {
+  description = "ECR repository URL for the Vehicle API"
+  value       = aws_ecr_repository.vehicle_api.repository_url
+}
