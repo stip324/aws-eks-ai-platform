@@ -42,3 +42,23 @@ output "aws_load_balancer_controller_role_arn" {
   description = "IAM role used by AWS Load Balancer Controller"
   value       = aws_iam_role.load_balancer_controller.arn
 }
+
+output "vehicle_api_role_arn" {
+  description = "IAM role used by the vehicle-api workload"
+  value       = aws_iam_role.vehicle_api.arn
+}
+
+output "vehicle_api_secret_arn" {
+  description = "Secrets Manager secret used by vehicle-api"
+  value       = aws_secretsmanager_secret.vehicle_api.arn
+}
+
+output "ssm_admin_instance_id" {
+  description = "EC2 instance used for private EKS administration through SSM"
+  value       = aws_instance.ssm_admin.id
+}
+
+output "ssm_admin_role_arn" {
+  description = "IAM role used by the SSM EKS admin host"
+  value       = aws_iam_role.ssm_admin.arn
+}

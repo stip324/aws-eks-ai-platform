@@ -35,6 +35,10 @@ module "eks" {
     eks-pod-identity-agent = {
       most_recent = true
     }
+
+    aws-secrets-store-csi-driver-provider = {
+      most_recent = true
+    }
   }
 
   eks_managed_node_groups = {
