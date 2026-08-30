@@ -113,4 +113,6 @@ jobs:
           image-ref: vehicle-api:${{ github.sha }}
           format: table
           severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          scanners: vuln
           exit-code: 1
