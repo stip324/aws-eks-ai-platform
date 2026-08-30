@@ -32,3 +32,13 @@ output "ecr_repository_url" {
   description = "ECR repository URL for the Vehicle API"
   value       = aws_ecr_repository.vehicle_api.repository_url
 }
+
+output "github_actions_role_arn" {
+  description = "IAM role assumed by GitHub Actions using OIDC"
+  value       = aws_iam_role.github_actions.arn
+}
+
+output "aws_load_balancer_controller_role_arn" {
+  description = "IAM role used by AWS Load Balancer Controller"
+  value       = aws_iam_role.load_balancer_controller.arn
+}

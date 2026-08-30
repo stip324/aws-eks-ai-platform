@@ -47,3 +47,10 @@ monitoring:
   enabled: true
   path: /metrics
   interval: 30s
+
+ingress:
+  enabled: false
+  className: alb
+  scheme: internet-facing
+  targetType: ip
+  healthCheckPath: /health

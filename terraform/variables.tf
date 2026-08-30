@@ -51,3 +51,32 @@ variable "node_desired_size" {
   type        = number
   default     = 1
 }
+
+
+variable "github_owner" {
+  description = "GitHub repository owner"
+  type        = string
+  default     = "stip324"
+}
+
+variable "github_owner_id" {
+  description = "Immutable GitHub owner ID"
+  type        = string
+}
+
+variable "github_repository" {
+  description = "GitHub repository name"
+  type        = string
+  default     = "aws-eks-ai-platform"
+}
+
+variable "github_repository_id" {
+  description = "Immutable GitHub repository ID"
+  type        = string
+}
+
+variable "github_branch" {
+  description = "GitHub branch allowed to assume the AWS role"
+  type        = string
+  default     = "main"
+}

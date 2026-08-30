@@ -6,3 +6,5 @@ node_instance_types  = ["t3.small"]
 node_min_size        = 1
 node_max_size        = 2
 node_desired_size    = 1
+github_owner_id      = "76018590"
+github_repository_id = "1348705793"
