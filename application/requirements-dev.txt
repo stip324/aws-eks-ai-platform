@@ -1,6 +1,4 @@
-fastapi
-uvicorn[standard]
-prometheus-client
+-r requirements.txt
 
 pytest
 httpx
