@@ -37,8 +37,13 @@ resource "aws_security_group" "ssm_admin" {
 
   # No inbound rules are required because access is through SSM.
 
+  # The SSM admin host is in a private subnet with no public IP.
+  # Outbound HTTPS is required for SSM connectivity, AWS APIs,
+  # package updates and kubectl installation through the NAT Gateway.
+  # Inbound access remains disabled.
+  #trivy:ignore:AVD-AWS-0104
   egress {
-    description = "HTTPS outbound"
+    description = "HTTPS outbound via NAT Gateway"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
