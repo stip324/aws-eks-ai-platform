@@ -1,5 +1,8 @@
 fastapi
 uvicorn[standard]
+prometheus-client
+
+msgpack>=1.2.1
+
 pytest
 httpx
-prometheus-client
