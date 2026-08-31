@@ -44,7 +44,7 @@ podDisruptionBudget:
   minAvailable: 2
 
 monitoring:
-  enabled: true
+  enabled: false
   path: /metrics
   interval: 30s
 
