@@ -15,6 +15,7 @@ plan.txt
 terraform.tfvars
 crash.log
 crash.*.log
+node-console.log
 
 # IDE / OS
 .vscode/

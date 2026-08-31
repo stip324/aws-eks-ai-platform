@@ -30,6 +30,26 @@ resource "aws_iam_instance_profile" "ssm_admin" {
   role = aws_iam_role.ssm_admin.name
 }
 
+data "aws_iam_policy_document" "ssm_admin_eks" {
+  statement {
+    sid = "DescribeEKSCluster"
+
+    actions = [
+      "eks:DescribeCluster"
+    ]
+
+    resources = [
+      module.eks.cluster_arn
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "ssm_admin_eks" {
+  name   = "${var.project_name}-eks-access"
+  role   = aws_iam_role.ssm_admin.id
+  policy = data.aws_iam_policy_document.ssm_admin_eks.json
+}
+
 resource "aws_security_group" "ssm_admin" {
   name        = "${var.project_name}-ssm-admin"
   description = "Security group for private SSM EKS administration host"
@@ -53,6 +73,18 @@ resource "aws_security_group" "ssm_admin" {
   tags = {
     Name = "${var.project_name}-ssm-admin"
   }
+}
+
+resource "aws_security_group_rule" "ssm_admin_to_eks_api" {
+  description = "Allow SSM admin host to access private EKS API"
+
+  type      = "ingress"
+  protocol  = "tcp"
+  from_port = 443
+  to_port   = 443
+
+  security_group_id        = module.eks.cluster_security_group_id
+  source_security_group_id = aws_security_group.ssm_admin.id
 }
 
 resource "aws_instance" "ssm_admin" {
@@ -85,10 +117,6 @@ resource "aws_instance" "ssm_admin" {
     curl -LO "https://dl.k8s.io/release/v1.36.0/bin/linux/amd64/kubectl"
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
     rm -f kubectl
-
-    aws eks update-kubeconfig \
-      --region ${var.aws_region} \
-      --name ${module.eks.cluster_name}
   EOF
 
   tags = {

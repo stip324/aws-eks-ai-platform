@@ -146,8 +146,6 @@ jobs:
       - security-scan
       - container-build
 
-    if: false
-
     permissions:
       contents: read
       id-token: write
