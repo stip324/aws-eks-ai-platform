@@ -22,7 +22,7 @@ pdb:
   minAvailable: 2
 
 ingress:
-  enabled: true
+  enabled: false
   className: alb
   scheme: internet-facing
   targetType: ip

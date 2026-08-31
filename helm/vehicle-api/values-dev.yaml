@@ -21,7 +21,7 @@ pdb:
   enabled: false
 
 ingress:
-  enabled: true
+  enabled: false
 
 monitoring:
   enabled: true

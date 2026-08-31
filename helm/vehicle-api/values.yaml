@@ -49,7 +49,7 @@ monitoring:
   interval: 30s
 
 ingress:
-  enabled: true
+  enabled: false
   className: alb
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
