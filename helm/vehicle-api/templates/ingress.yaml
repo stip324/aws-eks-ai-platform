@@ -8,10 +8,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 
   annotations:
-    alb.ingress.kubernetes.io/scheme: {{ .Values.ingress.scheme }}
-    alb.ingress.kubernetes.io/target-type: {{ .Values.ingress.targetType }}
-    alb.ingress.kubernetes.io/healthcheck-path: {{ .Values.ingress.healthCheckPath }}
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
 
 spec:
   ingressClassName: {{ .Values.ingress.className }}
@@ -21,11 +18,9 @@ spec:
         paths:
           - path: /
             pathType: Prefix
-
             backend:
               service:
                 name: {{ .Release.Name }}
-
                 port:
                   number: {{ .Values.service.port }}
 
