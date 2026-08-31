@@ -3,8 +3,8 @@ replicaCount: 3
 namespace: vehicle-platform
 
 image:
-  repository: vehicle-api
-  tag: local
+  repository: 771603407564.dkr.ecr.eu-west-2.amazonaws.com/vehicle-api
+  tag: "132b6c7c57b81b3ac6afadcd484bd6bd69e90e08"
   pullPolicy: IfNotPresent
 
 service:
