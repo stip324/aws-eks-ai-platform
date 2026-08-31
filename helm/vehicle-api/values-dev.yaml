@@ -24,4 +24,4 @@ ingress:
   enabled: false
 
 monitoring:
-  enabled: false
+  enabled: true
