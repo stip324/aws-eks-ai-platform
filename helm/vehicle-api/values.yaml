@@ -49,8 +49,9 @@ monitoring:
   interval: 30s
 
 ingress:
-  enabled: false
+  enabled: true
   className: alb
-  scheme: internet-facing
-  targetType: ip
-  healthCheckPath: /health
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /health
