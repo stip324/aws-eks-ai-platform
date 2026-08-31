@@ -9,7 +9,7 @@ spec:
   project: default
 
   source:
-    repoURL: YOUR_GITHUB_REPO_URL
+    repoURL: https://github.com/stip324/aws-eks-ai-platform.git
     targetRevision: main
     path: helm/vehicle-api
 
